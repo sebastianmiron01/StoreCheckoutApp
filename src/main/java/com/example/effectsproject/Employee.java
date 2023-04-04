@@ -9,6 +9,7 @@ public class Employee {
         this.target = target;
         this.name = name;
         this.sales=0;
+        this.salary=baseSalary;
     }
 
     public int getBaseSalary() {

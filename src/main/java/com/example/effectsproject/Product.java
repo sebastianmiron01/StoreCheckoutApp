@@ -1,17 +1,17 @@
 package com.example.effectsproject;
 
 public abstract class Product {
-    public int id;
+    public Integer id;
     public String name;
     public int price;
-    Product(int id,String name, int price)
+    Product(Integer id,String name, int price)
     {
         this.id=id;
         this.name=name;
         this.price=price;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

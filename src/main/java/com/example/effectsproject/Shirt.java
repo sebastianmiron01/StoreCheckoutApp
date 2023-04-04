@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 public  class Shirt extends Product implements Sellable,Searchable
 {
-    private HashMap<String,Integer> stock=new HashMap<>();
-    private static HashMap<Integer,String> sizeConverter =new HashMap<>();
-    public Shirt(int id, String name, int price)
+    public HashMap<String,Integer> stock=new HashMap<>();
+    public static HashMap<Integer,String> sizeConverter =new HashMap<>();
+    public Shirt(Integer id, String name, int price)
     {
         super(id,name,price);
 
@@ -26,6 +26,15 @@ public  class Shirt extends Product implements Sellable,Searchable
         sizeConverter.put(38,"M");
         sizeConverter.put(40,"L");
         sizeConverter.put(42,"XL");
+    }
+    public String getStock()
+    {
+        String s= "";
+        s=s+"S  "+stock.get("S")+"\n";
+        s=s+"M  "+stock.get("M")+"\n";
+        s=s+"L  "+stock.get("L")+"\n";
+        s=s+"XL  "+stock.get("XL")+"\n";
+        return s;
     }
     @Override
     public void sell(Integer size,Integer num,Employee e)

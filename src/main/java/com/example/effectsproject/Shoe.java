@@ -4,12 +4,24 @@ import java.util.HashMap;
 
 public class Shoe extends Product implements Sellable,Searchable{
 
-    private HashMap<Integer,Integer> stock= new HashMap<>();
+    public HashMap<Integer,Integer> stock= new HashMap<>();
 
     public Shoe(int id, String name, int price) {
         super(id,name,price);
     }
 
+    public String getStock()
+    {
+        String s= "";
+        s=s+"40  "+stock.get(40)+"\n";
+        s=s+"41  "+stock.get(41)+"\n";
+        s=s+"42  "+stock.get(42)+"\n";
+        s=s+"43  "+stock.get(43)+"\n";
+        s=s+"44  "+stock.get(44)+"\n";
+        s=s+"45  "+stock.get(45)+"\n";
+        s=s+"46  "+stock.get(46)+"\n";
+        return s;
+    }
 
     public void add(Integer size, Integer i)
     {
