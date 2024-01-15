@@ -64,6 +64,7 @@ public class HelloApplication extends Application {
         grid.add(rbutton10,5,1);
         grid.add(rbutton11,6,1);
 
+        Label inputLabel = new Label("Please input the code of a product:");
         Label transactionLabel = new Label(" Code  Name                       Price\n");
         final Integer[] sum = {0};
         final ArrayList<Product> transaction=new ArrayList<>();
@@ -151,7 +152,7 @@ public class HelloApplication extends Application {
 
         employeeButton.setOnAction(e -> stage.setScene(scene2));
         checkStockButton.setOnAction(e -> stage.setScene(scene3));
-        layout1.getChildren().addAll(t1,grid, sellButton, checkStockButton, transactionLabel);
+        layout1.getChildren().addAll(inputLabel,t1,grid, sellButton, checkStockButton, transactionLabel);
         //add employeeButton to layout1.getChildren when employee part is done
         Scene scene = new Scene(layout1, 500, 500);
 
