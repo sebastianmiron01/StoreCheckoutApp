@@ -30,6 +30,7 @@ public class HelloApplication extends Application {
         Button sellButton = new Button("Confirm transaction");
         Button employeeButton = new Button("Check employee's status");
         Button checkStockButton = new Button("Check Stock");
+        Button cancelButton = new Button("Cancel Transaction");
         GridPane grid = new GridPane();
         grid.setGridLinesVisible(false);
         grid.setHgap(10);
@@ -91,6 +92,15 @@ public class HelloApplication extends Application {
         final ArrayList<Integer> transactionShoeSize=new ArrayList<>();
         final ArrayList<Integer> transactionShirtSize=new ArrayList<>();
         final Employee[] emp = {null};
+        cancelButton.setOnAction(enter -> {
+            transaction.clear();
+            transactionShirtSize.clear();
+            transactionShoeSize.clear();
+            emp[0]=null;
+            rbutton17.fire();
+            rbutton17.setSelected(false);
+            transactionLabel.setText("Code  Name                       Price\n");
+        });
         t1.setOnAction(enter -> {
 
             for(Product p: products)
@@ -196,7 +206,7 @@ public class HelloApplication extends Application {
 
         employeeButton.setOnAction(e -> stage.setScene(scene2));
         checkStockButton.setOnAction(e -> stage.setScene(scene3));
-        layout1.getChildren().addAll(inputLabel,t1,grid, sellButton, employeeButton, checkStockButton, transactionLabel);
+        layout1.getChildren().addAll(inputLabel,t1,grid, sellButton, employeeButton, checkStockButton, cancelButton, transactionLabel);
         //add employeeButton to layout1.getChildren when employee part is done
         Scene scene = new Scene(layout1, 500, 500);
 
