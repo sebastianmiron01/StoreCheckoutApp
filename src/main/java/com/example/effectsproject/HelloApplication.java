@@ -1,20 +1,15 @@
 package com.example.effectsproject;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class HelloApplication extends Application {
     public static ArrayList<Employee> employees= new ArrayList<>();
@@ -56,6 +51,7 @@ public class HelloApplication extends Application {
         RadioButton rbutton9 = new RadioButton("44");rbutton9.setToggleGroup(group2);
         RadioButton rbutton10 = new RadioButton("45");rbutton10.setToggleGroup(group2);
         RadioButton rbutton11 = new RadioButton("46");rbutton11.setToggleGroup(group2);
+
         grid.add(rbutton5,0,1);
         grid.add(rbutton6,1,1);
         grid.add(rbutton7,2,1);
@@ -64,12 +60,37 @@ public class HelloApplication extends Application {
         grid.add(rbutton10,5,1);
         grid.add(rbutton11,6,1);
 
+        ToggleGroup group3 = new ToggleGroup();
+        ArrayList<RadioButton> employeeButtons =new ArrayList<>();
+        RadioButton rbutton12 = new RadioButton();rbutton12.setToggleGroup(group3);rbutton5.setSelected(true);
+        RadioButton rbutton13 = new RadioButton();rbutton13.setToggleGroup(group3);
+        RadioButton rbutton14 = new RadioButton();rbutton14.setToggleGroup(group3);
+        RadioButton rbutton15 = new RadioButton();rbutton15.setToggleGroup(group3);
+        RadioButton rbutton16 = new RadioButton();rbutton16.setToggleGroup(group3);
+        RadioButton rbutton17 = new RadioButton();rbutton17.setToggleGroup(group3);
+        employeeButtons.addAll(List.of(new RadioButton[]{rbutton12, rbutton13, rbutton14, rbutton15, rbutton16, rbutton17}));
+        int employeeCounter=0;
+        for(RadioButton rad : employeeButtons)
+        {
+            if(employeeCounter>employees.size()-1)
+                break;
+            rad.setText(employees.get(employeeCounter).getName());
+            employeeCounter++;
+        }
+        grid.add(rbutton12,0,2);
+        grid.add(rbutton13,1,2);
+        grid.add(rbutton14,2,2);
+        grid.add(rbutton15,3,2);
+        grid.add(rbutton16,4,2);
+        grid.add(rbutton17,5,2);
+
         Label inputLabel = new Label("Please input the code of a product:");
         Label transactionLabel = new Label(" Code  Name                       Price\n");
         final Integer[] sum = {0};
         final ArrayList<Product> transaction=new ArrayList<>();
         final ArrayList<Integer> transactionShoeSize=new ArrayList<>();
         final ArrayList<Integer> transactionShirtSize=new ArrayList<>();
+        final Employee[] emp = {null};
         t1.setOnAction(enter -> {
 
             for(Product p: products)
@@ -122,6 +143,30 @@ public class HelloApplication extends Application {
                     {
                         transactionShoeSize.add(deconverter.get("46"));
                     }
+                    if(rbutton12.isSelected())
+                    {
+                        emp[0] = employees.get(0);
+                    }
+                    if(rbutton13.isSelected())
+                    {
+                        emp[0] = employees.get(1);
+                    }
+                    if(rbutton14.isSelected())
+                    {
+                        emp[0] = employees.get(2);
+                    }
+                    if(rbutton15.isSelected())
+                    {
+                        emp[0] = employees.get(3);
+                    }
+                    if(rbutton16.isSelected())
+                    {
+                        emp[0] = employees.get(4);
+                    }
+                    if(rbutton17.isSelected())
+                    {
+                        emp[0] = employees.get(5);
+                    }
                     sum[0] = sum[0] +p.getPrice();
                     break;
                 }
@@ -134,25 +179,24 @@ public class HelloApplication extends Application {
                 {
                     if(p instanceof Shoe)
                     {
-                        ((Shoe) p).sell(transactionShoeSize.get(i),1,null);
-
+                        ((Shoe) p).sell(transactionShoeSize.get(i),1, emp[0]);
                     }
                     if(p instanceof Shirt)
                     {
-                        ((Shirt) p).sell(transactionShirtSize.get(i),1,null);
-
+                        ((Shirt) p).sell(transactionShirtSize.get(i),1, emp[0]);
                     }
                     i++;
                 }
                 transaction.clear();
                 transactionShirtSize.clear();
                 transactionShoeSize.clear();
+                emp[0]=null;
                 transactionLabel.setText("Code  Name                       Price\n");
         });
 
         employeeButton.setOnAction(e -> stage.setScene(scene2));
         checkStockButton.setOnAction(e -> stage.setScene(scene3));
-        layout1.getChildren().addAll(inputLabel,t1,grid, sellButton, checkStockButton, transactionLabel);
+        layout1.getChildren().addAll(inputLabel,t1,grid, sellButton, employeeButton, checkStockButton, transactionLabel);
         //add employeeButton to layout1.getChildren when employee part is done
         Scene scene = new Scene(layout1, 500, 500);
 
@@ -161,13 +205,18 @@ public class HelloApplication extends Application {
         Label l2 = new Label();
         l2.setText("Here are the employees:\n");
         l2.setText(l2.getText()+"Name  Sales  Target  Salary\n");
-        for(Employee e : employees)
-        {
-            l2.setText(l2.getText()+"  "+e.getName()+"  "+e.getSales()+"  "+e.getTarget()+"  "+e.getSalary()+"\n");
+        Button updateButton =new Button("Update progress");
+        updateButton.setOnAction(e->
+                {
+                    l2.setText("");
+                    for (Employee empProgress : employees) {
+                        l2.setText(l2.getText() + "  " + empProgress.getName() + "  " + empProgress.getSales() +
+                                "  " + empProgress.getTarget() + "  " + empProgress.getSalary() + "\n");
 
-        }
+                    }
+                });
         Button b2 = new Button("Back");
-        layout2.getChildren().addAll(b2, l2);
+        layout2.getChildren().addAll(b2,updateButton, l2);
         b2.setOnAction(e -> stage.setScene(scene));
 
         //Layout3
